@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewData["Title"] = "Newsletter";
+}
+    <main class="pt-[5.5rem] lg:pt-24">
+      <!-- Newsletter -->
+      <section class="relative py-24 dark:bg-jacarta-800">
+        <picture class="pointer-events-none absolute inset-0 -z-10 dark:hidden">
+          <img src="~/assets/img/gradient_light.jpg" alt="gradient" class="h-full w-full" />
+        </picture>
+        <div class="container">
+          <div class="lg:flex lg:items-center lg:justify-between">
+            <!-- Info -->
+            <div class="pb-10 lg:w-[45%] lg:py-20 lg:pr-16">
+              <h2 class="mb-6 font-display text-2xl text-jacarta-700 dark:text-white">
+                Sign up for The Tide, Xhibiter's newsletter!
+              </h2>
+              <p class="mb-10 text-lg leading-normal dark:text-jacarta-300">
+                Join our mailing list to stay in the loop with our newest feature releases, NFT drops, and tips and
+                tricks for navigating Xhibiter
+              </p>
+
+              <form class="relative">
+                <input
+                  type="email"
+                  placeholder="Email address"
+                  class="w-full rounded-full border border-jacarta-100 py-3 px-4 focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-white dark:placeholder-white"
+                />
+                <button
+                  class="absolute top-2 right-2 rounded-full bg-accent px-6 py-2 font-display text-sm text-white hover:bg-accent-dark"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+
+            <!-- Image -->
+            <div class="lg:w-[55%]">
+              <div class="relative">
+                <svg
+                  viewbox="0 0 200 200"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="mx-auto mt-8 w-[80%] rotate-[8deg]"
+                >
+                  <defs>
+                    <clipPath id="clipping" clipPathUnits="userSpaceOnUse">
+                      <path
+                        d="
+															M 0, 100
+															C 0, 17.000000000000004 17.000000000000004, 0 100, 0
+															S 200, 17.000000000000004 200, 100
+																			183, 200 100, 200
+																			0, 183 0, 100
+											"
+                        fill="#9446ED"
+                      ></path>
+                    </clipPath>
+                  </defs>
+                  <g clip-path="url(#clipping)">
+                    <!-- Bg image -->
+                    <image href="/assets/img/news.jpg" width="200" height="200" clip-path="url(#clipping)" />
+                  </g>
+                </svg>
+                <img src="~/assets/img/hero/3D_elements.png" alt="" class="absolute top-0 animate-fly" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- end newsletter -->
+    </main>

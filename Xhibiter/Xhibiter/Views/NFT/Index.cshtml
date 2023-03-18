@@ -1,0 +1,813 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+    <script src="~/assets/js/auction.js"></script>
+    <script src="~/assets/js/payment.js"></script>
+
+@model NFTDetailVM
+    <main class="mt-24">
+      <!-- Item -->
+      <section class="relative pt-12 pb-24 lg:py-24">
+        <picture class="pointer-events-none absolute inset-0 -z-10 dark:hidden">
+          <img src="~/assets/img/gradient_light.jpg" alt="gradient" class="h-full w-full" />
+        </picture>
+        <div class="container">
+          <!-- Item -->
+          <div class="md:flex md:flex-wrap">
+            <!-- Image -->
+            <figure class="mb-8 md:w-2/5 md:flex-shrink-0 md:flex-grow-0 md:basis-auto lg:w-1/2">
+              @if (Model.NFT.Metadata.MediaType =="audio")
+              {
+                  <div style="position:relative;">
+  <img src="~/assets/images/default/default-music.gif" style="width:600px;height:500px;">
+  <audio  controls style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;background:transparent;">
+    <source src="~/assets/media/nft/@Model.NFT.Metadata.MediaUrl"  type="audio/mp3">
+  </audio>
+</div>
+                    }
+                    else if(Model.NFT.Metadata.MediaType == "video")
+                    {
+                    <video
+                        controls
+                  loop
+                  muted
+                  poster="~/assets/images/default/default-video.jpg"
+                  style="width:600px;height:500px;"
+                alt="item"
+                class="cursor-pointer rounded-2.5xl">
+                <source src="~/assets/media/nft/@Model.NFT.Metadata.MediaUrl">
+
+              </video>
+                    }
+                    else
+                    {
+              <img
+                  style="width:600px;height:500px;"
+                src="~/assets/media/nft/@Model.NFT.Metadata.MediaUrl"
+                alt="item"
+                class="cursor-pointer rounded-2.5xl"
+                data-bs-toggle="modal"
+                data-bs-target="#imageModal"
+              />
+                        
+                    }
+
+              <!-- Modal -->
+              <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog !my-0 flex h-full items-center justify-center p-4">
+                  <img
+                      style="object-fit: cover;width:1000px;height:600px;"
+                      src="~/assets/media/nft/@Model.NFT.Metadata.MediaUrl" alt="item" />
+                </div>
+
+                <button
+                  type="button"
+                  class="btn-close absolute top-6 right-6"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    class="h-6 w-6 fill-white"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path
+                      d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <!-- end modal -->
+            </figure>
+
+            <!-- Details -->
+            <div class="md:w-3/5 md:basis-auto md:pl-8 lg:w-1/2 lg:pl-[3.75rem]">
+              <!-- Collection / Likes / Actions -->
+              <div class="mb-3 flex">
+                <!-- Collection -->
+                <div class="flex items-center">
+                  <a asp-action="Index" asp-controller="Collection" asp-route-id="@Model.NFT.CollectionId" class="mr-2 text-sm font-bold text-accent">@Model.CollectionName</a>
+                  <span
+                    class="inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-green dark:border-jacarta-600"
+                    data-tippy-content="Verified Collection"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      class="h-[.875rem] w-[.875rem] fill-white"
+                    >
+                      <path fill="none" d="M0 0h24v24H0z"></path>
+                      <path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"></path>
+                    </svg>
+                  </span>
+                </div>
+
+                <!-- Likes / Actions -->
+                <div class="ml-auto flex space-x-2">
+                  <!-- Actions -->
+                  @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.NFT.Owner.UserName)
+                  {
+                  <div
+                    class="dropdown rounded-xl border border-jacarta-100 bg-white hover:bg-jacarta-100 dark:border-jacarta-600 dark:bg-jacarta-700 dark:hover:bg-jacarta-600"
+                  >
+                    <a
+                      href="#"
+                      class="dropdown-toggle inline-flex h-10 w-10 items-center justify-center text-sm"
+                      role="button"
+                      id="collectionActions"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <svg
+                        width="16"
+                        height="4"
+                        viewBox="0 0 16 4"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="fill-jacarta-500 dark:fill-jacarta-200"
+                      >
+                        <circle cx="2" cy="2" r="2"></circle>
+                        <circle cx="8" cy="2" r="2"></circle>
+                        <circle cx="14" cy="2" r="2"></circle>
+                      </svg>
+                    </a>
+                    <div
+                      class="dropdown-menu dropdown-menu-end z-10 hidden min-w-[200px] whitespace-nowrap rounded-xl bg-white py-4 px-2 text-left shadow-xl dark:bg-jacarta-800"
+                      aria-labelledby="collectionActions"
+                    >
+                      <a asp-action="Delete" asp-controller="NFT" asp-route-id="@Model.NFT.Id"
+                        class="block w-full rounded-xl px-5 py-2 text-left font-display text-sm transition-colors hover:bg-jacarta-50 dark:text-white dark:hover:bg-jacarta-600"
+                      >
+                        Delete
+                      </a>
+                      <hr class="my-2 mx-4 h-px border-0 bg-jacarta-100 dark:bg-jacarta-600" />
+                      <a asp-action="Edit" asp-controller="NFT" asp-route-id="@Model.NFT.Id"
+                        class="block w-full rounded-xl px-5 py-2 text-left font-display text-sm transition-colors hover:bg-jacarta-50 dark:text-white dark:hover:bg-jacarta-600"
+                      >
+                        Edit
+                      </a>
+                    </div>
+                  </div>
+                      
+                  }
+                </div>
+              </div>
+
+              <h1 class="mb-4 font-display text-4xl font-semibold text-jacarta-700 dark:text-white">@Model.NFT.Name</h1>
+
+
+              <p class="mb-10 dark:text-jacarta-300">
+                  @Model.NFT.Description
+              </p>
+
+              <!-- Creator / Owner -->
+              <div class="mb-8 flex flex-wrap">
+                <div class="mr-8 mb-4 flex">
+                  <figure class="mr-4 shrink-0">
+                    <a asp-action="Index" asp-controller="Profile" asp-route-username="@Model.NFT.Metadata.Creator.UserName" class="relative block">
+                      <img
+                          width="48"
+                          height="48"
+                          src="~/assets/images/users/@Model.NFT.Metadata.Creator.UserName/profile/@Model.NFT.Metadata.Creator.Profile.ProfileImageUrl" alt="avatar 7" class="rounded-2lg" loading="lazy" />
+                      <div
+                        class="absolute -right-3 top-[60%] flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-green dark:border-jacarta-600"
+                        data-tippy-content="Verified Collection"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          class="h-[.875rem] w-[.875rem] fill-white"
+                        >
+                          <path fill="none" d="M0 0h24v24H0z"></path>
+                          <path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"></path>
+                        </svg>
+                      </div>
+                    </a>
+                  </figure>
+                  <div class="flex flex-col justify-center">
+                    <span class="block text-sm text-jacarta-400 dark:text-white"
+                      >Creator</span
+                    >
+                    <a asp-action="Index" asp-controller="Profile" asp-route-username="@Model.NFT.Metadata.Creator.UserName" class="block text-accent">
+                      <span class="text-sm font-bold">@@@Model.NFT.Metadata.Creator.UserName</span>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="mb-4 flex">
+                  <figure class="mr-4 shrink-0">
+                    <a asp-action="Index" asp-controller="Profile" asp-route-username="@Model.NFT.Owner.UserName" class="relative block">
+                      <img
+                          width="48px"
+                          height="48px"
+                          src="~/assets/images/users/@Model.NFT.Owner.UserName/profile/@Model.NFT.Owner.Profile.ProfileImageUrl" alt="avatar 1" class="rounded-2lg" loading="lazy" />
+                      <div
+                        class="absolute -right-3 top-[60%] flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-green dark:border-jacarta-600"
+                        data-tippy-content="Verified Collection"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          class="h-[.875rem] w-[.875rem] fill-white"
+                        >
+                          <path fill="none" d="M0 0h24v24H0z"></path>
+                          <path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"></path>
+                        </svg>
+                      </div>
+                    </a>
+                  </figure>
+                  <div class="flex flex-col justify-center">
+                    <span class="block text-sm text-jacarta-400 dark:text-white">Owned by</span>
+                    <a asp-action="Index" asp-controller="Profile" asp-route-username="@Model.NFT.Owner.UserName" class="block text-accent">
+                      <span class="text-sm font-bold">@@@Model.NFT.Owner.UserName</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bid -->
+              <div
+                class="rounded-2lg border border-jacarta-100 bg-white p-8 dark:border-jacarta-600 dark:bg-jacarta-700"
+              >
+              @if (Model.NFT.IsAuctioned &&  Model.Auction.EndTime > DateTime.Now && !Model.NFT.IsSale)
+              {
+                <div class="mb-8 sm:flex sm:flex-wrap">
+                  <!-- Highest bid -->
+                  <div class="sm:w-1/2 sm:pr-4 lg:pr-8">
+                    <div id="highestbidder" class="block overflow-hidden text-ellipsis whitespace-nowrap">
+                      <span  class="text-sm text-jacarta-400 dark:text-jacarta-300">Highest bid by </span>
+                      <a asp-controller="Profile" asp-action="Index" asp-route-username="@Model.Auction.Winner.NFTUser.UserName" class="text-sm font-bold text-accent"
+                        >@Model.Auction.Winner.NFTUser.UserName</a>
+                    </div>
+                    <div class="mt-3 flex">
+                      <div>
+                        <div class="flex items-center whitespace-nowrap">
+                          <span class="-ml-1" data-tippy-content="ETH">
+                            <svg
+                              version="1.1"
+                              xmlns="http://www.w3.org/2000/svg"
+                              x="0"
+                              y="0"
+                              viewBox="0 0 1920 1920"
+                              xml:space="preserve"
+                              class="h-5 w-5"
+                            >
+                              <path fill="#8A92B2" d="M959.8 80.7L420.1 976.3 959.8 731z"></path>
+                              <path
+                                fill="#62688F"
+                                d="M959.8 731L420.1 976.3l539.7 319.1zm539.8 245.3L959.8 80.7V731z"
+                              ></path>
+                              <path fill="#454A75" d="M959.8 1295.4l539.8-319.1L959.8 731z"></path>
+                              <path fill="#8A92B2" d="M420.1 1078.7l539.7 760.6v-441.7z"></path>
+                              <path fill="#62688F" d="M959.8 1397.6v441.7l540.1-760.6z"></path>
+                            </svg>
+                          </span>
+                          <span class="highestt-@Model.Auction.Id text-lg font-medium leading-tight tracking-tight text-green">@Model.Auction.CurrentPrice ETH</span>
+                        </div>
+                        <span class="text-sm text-jacarta-400 dark:text-jacarta-300">@(Math.Round(Model.Auction.CurrentPrice * Convert.ToDecimal(1647.44),2)) $</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Countdown -->
+                  <div
+                    class="mt-4 dark:border-jacarta-600 sm:mt-0 sm:w-1/2 sm:border-l sm:border-jacarta-100 sm:pl-4 lg:pl-8"
+                  >
+                    <span class="js-countdown-ends-label text-sm text-jacarta-400 dark:text-jacarta-300"
+                      >Auction ends in  @Model.Auction.EndTime.ToString()</span
+                    >
+                    <div
+                      class="js-countdown-single-timer mt-3 flex space-x-4"
+                      data-countdown="@Model.Auction.EndTime"
+                      data-expired="This auction has ended winner is @Model.Auction.Winner.NFTUser.UserName!"
+                    >
+                      <span class="countdown-days text-jacarta-700 dark:text-white">
+                        <span class="js-countdown-days-number text-lg font-medium lg:text-[1.5rem]"></span>
+                        <span class="block text-xs font-medium tracking-tight">Days</span>
+                      </span>
+                      <span class="countdown-hours text-jacarta-700 dark:text-white">
+                        <span class="js-countdown-hours-number text-lg font-medium lg:text-[1.5rem]"></span>
+                        <span class="block text-xs font-medium tracking-tight">Hrs</span>
+                      </span>
+                      <span class="countdown-minutes text-jacarta-700 dark:text-white">
+                        <span class="js-countdown-minutes-number text-lg font-medium lg:text-[1.5rem]"></span>
+                        <span class="block text-xs font-medium tracking-tight">Min</span>
+                      </span>
+                      <span class="countdown-seconds text-jacarta-700 dark:text-white">
+                        <span class="js-countdown-seconds-number text-lg font-medium lg:text-[1.5rem]"></span>
+                        <span class="block text-xs font-medium tracking-tight">Sec</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#placeBidModal"
+                  class="inline-block w-full rounded-full bg-accent py-3 px-8 text-center font-semibold text-white shadow-accent-volume transition-all hover:bg-accent-dark"
+                  >Place Bid</a
+                >
+                        }
+                        else if (Model.NFT.IsSale && !Model.NFT.IsAuctioned)
+                        {
+                                              
+                <div class="mb-8 sm:flex sm:flex-wrap">
+                  <!-- Highest bid -->
+                  <div class="sm:w-1/2 sm:pr-4 lg:pr-8">
+                                          
+                      <div  class="block overflow-hidden text-ellipsis whitespace-nowrap">
+                      <span  class="text-lg text-bold text-jacarta-400 dark:text-white">Sale Price</span>
+                    </div>
+                    <div class="mt-3 flex">
+                      <div>
+                        <div class="flex items-center whitespace-nowrap">
+                          <span class="-ml-1" data-tippy-content="ETH">
+                            <svg
+                              version="1.1"
+                              xmlns="http://www.w3.org/2000/svg"
+                              x="0"
+                              y="0"
+                              viewBox="0 0 1920 1920"
+                              xml:space="preserve"
+                              class="h-5 w-5"
+                            >
+                              <path fill="#8A92B2" d="M959.8 80.7L420.1 976.3 959.8 731z"></path>
+                              <path
+                                fill="#62688F"
+                                d="M959.8 731L420.1 976.3l539.7 319.1zm539.8 245.3L959.8 80.7V731z"
+                              ></path>
+                              <path fill="#454A75" d="M959.8 1295.4l539.8-319.1L959.8 731z"></path>
+                              <path fill="#8A92B2" d="M420.1 1078.7l539.7 760.6v-441.7z"></path>
+                              <path fill="#62688F" d="M959.8 1397.6v441.7l540.1-760.6z"></path>
+                            </svg>
+                          </span>
+                          <span class="text-xl mr-4 leading-tight tracking-tight text-green">@Model.NFT.Price ETH</span>
+                          <span class="ml-4 pl-6 text-xl  leading-tight tracking-tight text-red">@(Math.Round(Model.NFT.Price * Convert.ToDecimal(1647.44),2)) $</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#buyNowModal"
+                  class="inline-block ml-2 mr-2 rounded-full bg-accent py-3 px-8 text-center font-semibold text-white shadow-accent-volume transition-all hover:bg-accent-dark"
+                  >Buy with Ethereum</a
+                >
+                        }
+                    </div>
+              <!-- end bid -->
+            </div>
+            <!-- end details -->
+          </div>
+
+          <!-- Tabs -->
+          <div class="scrollbar-custom mt-14 overflow-x-auto rounded-lg">
+            <div class="min-w-fit">
+              <!-- Tabs Nav -->
+              <ul class="nav nav-tabs flex items-center" role="tablist">
+                <!-- Offers -->
+                @if (Model.Bids != null)
+                        {
+                            
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link active relative flex items-center whitespace-nowrap py-3 px-6 text-jacarta-400 hover:text-jacarta-700 dark:hover:text-white"
+                    id="offers-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#offers"
+                    type="button"
+                    role="tab"
+                    aria-controls="offers"
+                    aria-selected="true"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      class="mr-1 h-5 w-5 fill-current"
+                    >
+                      <path fill="none" d="M0 0h24v24H0z" />
+                      <path
+                        d="M8 4h13v2H8V4zm-5-.5h3v3H3v-3zm0 7h3v3H3v-3zm0 7h3v3H3v-3zM8 11h13v2H8v-2zm0 7h13v2H8v-2z"
+                      />
+                    </svg>
+                    <span class="font-display text-base font-medium">Offers</span>
+                  </button>
+                </li>
+                        }
+
+                <!-- Details -->
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link relative flex items-center whitespace-nowrap py-3 px-6 text-jacarta-400 hover:text-jacarta-700 dark:hover:text-white"
+                    id="details-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#details"
+                    type="button"
+                    role="tab"
+                    aria-controls="details"
+                    aria-selected="false"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      class="mr-1 h-5 w-5 fill-current"
+                    >
+                      <path fill="none" d="M0 0h24v24H0z" />
+                      <path
+                        d="M20 22H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1zm-1-2V4H5v16h14zM7 6h4v4H7V6zm0 6h10v2H7v-2zm0 4h10v2H7v-2zm6-9h4v2h-4V7z"
+                      />
+                    </svg>
+                    <span class="font-display text-base font-medium">Details</span>
+                  </button>
+                </li>
+              </ul>
+
+              <!-- Tab Content -->
+              <div class="tab-content">
+                <!-- Offers -->
+                    @if (Model.Bids != null)
+                    {
+                <div class="tab-pane fade show active" id="offers" role="tabpanel" aria-labelledby="offers-tab">
+                  <div
+                    role="table"
+                    class="scrollbar-custom grid max-h-72 w-full grid-cols-5 overflow-y-auto rounded-lg rounded-tl-none border border-jacarta-100 bg-white text-sm dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-white"
+                  >
+                    <div class="contents" role="row">
+                      <div class="sticky top-0 bg-light-base py-2 px-4 dark:bg-jacarta-600" role="columnheader">
+                        <span class="w-full overflow-hidden text-ellipsis text-jacarta-700 dark:text-jacarta-100"
+                          >Price</span
+                        >
+                      </div>
+                      <div class="sticky top-0 bg-light-base py-2 px-4 dark:bg-jacarta-600" role="columnheader">
+                        <span class="w-full overflow-hidden text-ellipsis text-jacarta-700 dark:text-jacarta-100"
+                          >USD Price</span
+                        >
+                      </div>
+                      <div class="sticky top-0 bg-light-base py-2 px-4 dark:bg-jacarta-600" role="columnheader">
+                        <span class="w-full overflow-hidden text-ellipsis text-jacarta-700 dark:text-jacarta-100"
+                          >AZN Price</span
+                        >
+                      </div>
+                      <div class="sticky top-0 bg-light-base py-2 px-4 dark:bg-jacarta-600" role="columnheader">
+                        <span class="w-full overflow-hidden text-ellipsis text-jacarta-700 dark:text-jacarta-100"
+                          >Bid Date</span
+                        >
+                      </div>
+                      <div class="sticky top-0 bg-light-base py-2 px-4 dark:bg-jacarta-600" role="columnheader">
+                        <span class="w-full overflow-hidden text-ellipsis text-jacarta-700 dark:text-jacarta-100"
+                          >From</span
+                        >
+                      </div>
+                    </div>
+                        @if (Model.Bids != null)
+                                    {
+                                        
+                    @foreach (var item in Model.Bids)
+                    {
+                    <div class="contents" role="row">
+                      <div
+                        class="flex items-center whitespace-nowrap border-t border-jacarta-100 py-4 px-4 dark:border-jacarta-600"
+                        role="cell"
+                      >
+                        <span class="-ml-1" data-tippy-content="ETH">
+                          <svg
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            x="0"
+                            y="0"
+                            viewBox="0 0 1920 1920"
+                            xml:space="preserve"
+                            class="mr-1 h-4 w-4"
+                          >
+                            <path fill="#8A92B2" d="M959.8 80.7L420.1 976.3 959.8 731z"></path>
+                            <path
+                              fill="#62688F"
+                              d="M959.8 731L420.1 976.3l539.7 319.1zm539.8 245.3L959.8 80.7V731z"
+                            ></path>
+                            <path fill="#454A75" d="M959.8 1295.4l539.8-319.1L959.8 731z"></path>
+                            <path fill="#8A92B2" d="M420.1 1078.7l539.7 760.6v-441.7z"></path>
+                            <path fill="#62688F" d="M959.8 1397.6v441.7l540.1-760.6z"></path>
+                          </svg>
+                        </span>
+                        <span class="text-sm font-medium tracking-tight text-green">@item.Amount ETH</span>
+                      </div>
+                      <div
+                        class="flex items-center border-t border-jacarta-100 py-4 px-4 dark:border-jacarta-600"
+                        role="cell"
+                      >
+                        @(Math.Round(item.Amount * Convert.ToDecimal(1647.44),1)) $
+                      </div>
+                      <div
+                        class="flex items-center border-t border-jacarta-100 py-4 px-4 dark:border-jacarta-600"
+                        role="cell"
+                      >
+                        @(Math.Round(item.Amount * Convert.ToDecimal(2816.16),1)) AZN 
+                      </div>
+                      <div
+                        class="flex items-center border-t border-jacarta-100 py-4 px-4 dark:border-jacarta-600"
+                        role="cell"
+                      >
+                        @item.Date.ToString()
+                      </div>
+                      <div
+                        class="flex items-center border-t border-jacarta-100 py-4 px-4 dark:border-jacarta-600"
+                        role="cell"
+                      >
+                        <a asp-action="Index" asp-controller="Profile" asp-route-username="@item.Bidder.NFTUser.UserName" class="text-accent">@item.Bidder.NFTUser.UserName</a>
+                      </div>
+                    </div>
+                        
+                    }
+                                    }
+                  </div>
+                </div>
+                    }
+                <!-- Details -->
+                <div class="tab-pane fade" id="details" role="tabpanel" aria-labelledby="details-tab">
+                  <div
+                    class="rounded-t-2lg rounded-b-2lg rounded-tl-none border border-jacarta-100 bg-white p-6 dark:border-jacarta-600 dark:bg-jacarta-700 md:p-10"
+                  >
+                    <div class="mb-2 flex items-center">
+                      <span class="mr-2 min-w-[9rem] dark:text-jacarta-300">Token ID:</span>
+                      <span
+                        class="js-copy-clipboard cursor-pointer select-none text-jacarta-700 dark:text-white"
+                        data-tippy-content="Copy"
+                        >@Model.NFT.Metadata.TokenId</span
+                      >
+                    </div>
+                    <div class="mb-2 flex items-center">
+                      <span class="mr-2 min-w-[9rem] dark:text-jacarta-300">Token Standard:</span>
+                      <span class="text-jacarta-700 dark:text-white">ERC-721</span>
+                    </div>
+                    <div class="flex items-center">
+                      <span class="mr-2 min-w-[9rem] dark:text-jacarta-300">Blockchain:</span>
+                      <span class="text-jacarta-700 dark:text-white">Ethereum</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end tab content -->
+            </div>
+          </div>
+          <!-- end tabs -->
+        </div>
+      </section>
+      <!-- end item -->
+
+      <!-- Related -->
+      <section class="bg-light-base py-24 dark:bg-jacarta-800">
+        <div class="container">
+          <h2 class="mb-8 text-center font-display text-3xl text-jacarta-700 dark:text-white">
+            More from this collection
+          </h2>
+
+          <div class="relative">
+            <!-- Slider -->
+            <div class="swiper card-slider-4-columns !py-5">
+              <div class="swiper-wrapper">
+                <!-- Slides -->
+                    @foreach (var item in Model.NFTs)
+                    {
+                <div class="swiper-slide">
+                <article>
+                  <div
+                    class="block rounded-2.5xl border border-jacarta-100 bg-white p-[1.1875rem] transition-shadow hover:shadow-lg dark:border-jacarta-700 dark:bg-jacarta-700"
+                  >
+                    <figure class="relative">
+                                
+                        <a asp-action="Index" asp-controller="NFT" asp-route-id="@item.Id">
+                @if (item.Metadata.MediaType == "audio")
+                {
+                    <div style="position:relative;">
+                        <img src="~/assets/images/default/default-music.gif" style="width:230px;height:230px;">
+                        <audio  controls style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;background:transparent;">
+                        <source src="~/assets/media/nft/@item.Metadata.MediaUrl"  type="audio/mp3">
+                        </audio>
+                    </div>
+                }
+                else if(item.Metadata.MediaType == "video")
+                {
+                    <video
+                        controls loop muted poster="~/assets/images/default/default-video.jpg"
+                        style="height:230px;width:230px;max-width:none;max-block-size:none;max-height:none;"
+                        alt="item"
+                        class="w-full rounded-[0.625rem]">
+                    <source src="~/assets/media/nft/@item.Metadata.MediaUrl">
+                    </video>
+                }
+                else
+                {
+                <img
+                    style="height:230px;"
+                src="~/assets/media/nft/@item.Metadata.MediaUrl"
+                alt="item 1"
+                class="w-full rounded-[0.625rem]"
+                loading="lazy"
+                />
+                }
+            </a>
+                    </figure>
+                    <div class="mt-7 flex items-center justify-between">
+                      <a asp-action="Index" asp-controller="NFT" asp-route-id="@item.Id">
+                        <span class="font-display text-base text-jacarta-700 hover:text-accent dark:text-white"
+                          >@item.Name</span
+                        >
+                      </a>
+                    </div>
+                    <div class="mt-2 text-sm">
+                      <span class="mr-1 text-jacarta-700 dark:text-jacarta-200">From @item.Price ETH</span>
+                    </div>
+
+                    <div class="mt-8 flex items-center justify-between">
+                      <a asp-action="Index" asp-controller="NFT" asp-route-id="@item.Id"
+                        class="font-display text-sm font-semibold text-accent"
+                      >
+                        Buy now
+                      </a>
+                      <a asp-action="Index" asp-controller="NFT" asp-route-id="@item.Id" class="group flex items-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          class="mr-1 mb-[3px] h-4 w-4 fill-jacarta-500 group-hover:fill-accent dark:fill-jacarta-200"
+                        >
+                          <path fill="none" d="M0 0H24V24H0z" />
+                          <path
+                            d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12h2c0 4.418 3.582 8 8 8s8-3.582 8-8-3.582-8-8-8C9.25 4 6.824 5.387 5.385 7.5H8v2H2v-6h2V6c1.824-2.43 4.729-4 8-4zm1 5v4.585l3.243 3.243-1.415 1.415L11 12.413V7h2z"
+                          />
+                        </svg>
+                        <span class="font-display text-sm font-semibold group-hover:text-accent dark:text-jacarta-200"
+                          >View History</span
+                        >
+                      </a>
+                    </div>
+                  </div>
+                </article>
+                        
+                </div>
+                    }
+              </div>
+            </div>
+
+            <!-- Slider Navigation -->
+            <div
+              class="swiper-button-prev swiper-button-prev-1 group absolute top-1/2 -left-4 z-10 -mt-6 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-white p-3 text-base shadow-white-volume sm:-left-6"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                class="fill-jacarta-700 group-hover:fill-accent"
+              >
+                <path fill="none" d="M0 0h24v24H0z" />
+                <path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z" />
+              </svg>
+            </div>
+            <div
+              class="swiper-button-next swiper-button-next-1 group absolute top-1/2 -right-4 z-10 -mt-6 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-white p-3 text-base shadow-white-volume sm:-right-6"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                class="fill-jacarta-700 group-hover:fill-accent"
+              >
+                <path fill="none" d="M0 0h24v24H0z" />
+                <path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- end related -->
+    </main>
+    @if (Model.NFT.IsAuctioned && Model.Auction.EndTime > DateTime.Now && User.Identity.IsAuthenticated)
+{
+    @await Component.InvokeAsync("Bid",new{auctionId = Model.Auction.Id,username =  User.Identity.Name});
+}
+else{
+    
+<form id="buyingform" method="post">
+<div class="modal fade" id="buyNowModal" tabindex="-1" aria-labelledby="buyNowModalLabel" aria-hidden="true">
+      <div class="modal-dialog max-w-2xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="buyNowModalLabel">Complete checkout</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                class="h-6 w-6 fill-jacarta-700 dark:fill-white"
+              >
+                <path fill="none" d="M0 0h24v24H0z" />
+                <path
+                  d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Body -->
+          <div class="modal-body p-6">
+            <div class="mb-2 flex items-center justify-between">
+              <span class="font-display text-sm font-semibold text-jacarta-700 dark:text-white">Item</span>
+            </div>
+
+            <div class="relative flex items-center border-t border-b border-jacarta-100 py-4 dark:border-jacarta-600">
+              <figure class="mr-5 self-start">
+                <img style="width:100px;height:100px;" src="~/assets/media/nft/@Model.NFT.Metadata.MediaUrl" alt="avatar 2" class="rounded-2lg" loading="lazy" />
+              </figure>
+
+              <div>
+                <a  class="text-sm text-accent">@Model.CollectionName</a>
+                <h3 class="mb-1 font-display text-base font-semibold text-jacarta-700 dark:text-white">
+                  @Model.NFT.Name
+                </h3>
+              </div>
+            </div>
+
+            <!-- Total -->
+            <div
+              class="mb-2 flex items-center justify-between border-b border-jacarta-100 py-2.5 dark:border-jacarta-600"
+            >
+              <span class="font-display font-semibold text-jacarta-700 hover:text-accent dark:text-white">Total</span>
+              <div class="ml-auto">
+                <span class="flex items-center whitespace-nowrap">
+                  <span data-tippy-content="ETH">
+                    <svg
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      x="0"
+                      y="0"
+                      viewBox="0 0 1920 1920"
+                      xml:space="preserve"
+                      class="h-4 w-4"
+                    >
+                      <path fill="#8A92B2" d="M959.8 80.7L420.1 976.3 959.8 731z"></path>
+                      <path fill="#62688F" d="M959.8 731L420.1 976.3l539.7 319.1zm539.8 245.3L959.8 80.7V731z"></path>
+                      <path fill="#454A75" d="M959.8 1295.4l539.8-319.1L959.8 731z"></path>
+                      <path fill="#8A92B2" d="M420.1 1078.7l539.7 760.6v-441.7z"></path>
+                      <path fill="#62688F" d="M959.8 1397.6v441.7l540.1-760.6z"></path>
+                    </svg>
+                  </span>
+                  <span class="font-medium tracking-tight text-green">@Model.NFT.Price ETH</span>
+                </span>
+                <div class="text-right dark:text-jacarta-300">@(Math.Round(Model.NFT.Price * Convert.ToDecimal(1647.44),2)) $</div>
+              </div>
+            </div>
+            <div class="mt-4 flex items-center">
+                <label   class="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
+                  >Wallet Password</label>
+                  <input type="hidden" id="BuyerName" name="BuyerName" value="@User.Identity.Name">
+                  <input type="hidden" id="ownerId" name="ownerId" value="@Model.NFT.OwnerId">
+                  <input type="hidden" id="price" name="price" value="@Model.NFT.Price">
+                  <input type="hidden" id="NFTId" name="NFTId" value="@Model.NFT.Id">
+                <input
+                    id="WalletInfo"
+                    name="WalletInfo"
+                    required
+                    type="text"
+                  class="w-full rounded-lg border-jacarta-100 py-3 hover:ring-2 hover:ring-accent/10 focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-white dark:placeholder:text-jacarta-300"
+                  placeholder="Enter Wallet Password"/>
+            </div>
+          </div>
+          <!-- end body -->
+
+          <div class="modal-footer">
+            <div class="flex items-center justify-center space-x-4">
+              <button
+                type="submit"
+                class="rounded-full bg-accent py-3 px-8 text-center font-semibold text-white shadow-accent-volume transition-all hover:bg-accent-dark"
+              >
+                Confirm Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</form>
+}

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<NFTCollection>
+                  @foreach (var item in Model)
+                 {
+                <article>
+                  <div
+                    class="rounded-2.5xl border border-jacarta-100 bg-white p-[1.1875rem] transition-shadow hover:shadow-lg dark:border-jacarta-700 dark:bg-jacarta-700"
+                  >
+                    <a asp-action="Index" asp-controller="Collection" asp-route-id="@item.Id" class="flex space-x-[0.625rem]">
+                        <img
+                            style="height:330px"
+                          src="~/assets/images/users/@item.Creator.NFTUser.UserName/collections/@item.Name/@item.MainImgUrl"
+                          alt="item 1"
+                          class="h-full w-full rounded-[0.625rem] object-cover"
+                          loading="lazy"
+                        />
+                    </a>
+
+                    <a
+                      asp-action="Index" asp-controller="Collection" asp-route-id="@item.Id"
+                      class="mt-4 block font-display text-base text-jacarta-700 hover:text-accent dark:text-white dark:hover:text-accent"
+                    >
+                      @item.Name
+                    </a>
+
+                    <div class="mt-2 flex items-center justify-between text-sm font-medium tracking-tight">
+                      <div class="flex flex-wrap items-center">
+                        <a asp-controller="Profile" asp-action="Index" asp-route-username="@item.Creator.NFTUser.UserName" class="mr-2 shrink-0">
+                          <img style="width:20px;height:20px;" src="~/assets/images/users/@item.Creator.NFTUser.UserName/profile/@item.Creator.ProfileImageUrl" alt="owner" class="h-5 w-5 rounded-full" />
+                        </a>
+                        <span class="mr-1 dark:text-jacarta-400">by</span>
+                        <a asp-controller="Profile" asp-action="Index" asp-route-username="@item.Creator.NFTUser.UserName" class="text-accent">
+                          <span>@item.Creator.NFTUser.UserName</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+                 }

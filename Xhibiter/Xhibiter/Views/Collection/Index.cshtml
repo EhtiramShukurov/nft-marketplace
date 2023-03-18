@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model NFTCollection
+    <main class="pt-[5.5rem] lg:pt-24">
+      <!-- Banner -->
+      <div class="relative">
+        <img src="~/assets/images/users/@Model.Creator.NFTUser.UserName/collections/@Model.Name/@Model.CoverImgUrl" alt="banner" class="h-[18.75rem] w-full object-cover" />
+      </div>
+      <!-- end banner -->
+
+      <!-- Profile -->
+      <section class="relative bg-light-base pb-12 pt-28 dark:bg-jacarta-800">
+        <!-- Avatar -->
+        <div class="absolute left-1/2 top-0 z-10 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+          <figure class="relative">
+            <img
+                style="width:150px; height:150px;"
+              src="~/assets/images/users/@Model.Creator.NFTUser.UserName/collections/@Model.Name/@Model.LogoImgUrl"
+              alt="collection avatar"
+              class="rounded-xl border-[5px] border-white dark:border-jacarta-600"
+            />
+            <div
+              class="absolute -right-3 bottom-0 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-green dark:border-jacarta-600"
+              data-tippy-content="Verified Collection"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                class="h-[.875rem] w-[.875rem] fill-white"
+              >
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"></path>
+              </svg>
+            </div>
+          </figure>
+        </div>
+
+        <div class="container">
+          <div class="text-center">
+            <h2 class="mb-2 font-display text-4xl font-medium text-jacarta-700 dark:text-white">@Model.Name</h2>
+            <div class="mb-8">
+              <span class="text-sm font-bold text-jacarta-400">Created by</span>
+              <a asp-action="Index" asp-controller="Profile" asp-route-username="@Model.Creator.NFTUser.UserName" class="text-sm font-bold text-accent">@Model.Creator.NFTUser.UserName</a>
+            </div>
+
+            <div
+              class="mb-8 inline-flex flex-wrap items-center justify-center rounded-xl border border-jacarta-100 bg-white dark:border-jacarta-600 dark:bg-jacarta-800"
+            >
+              <a
+                href="#"
+                class="w-1/2 rounded-l-xl border-r border-jacarta-100 py-4 hover:shadow-md dark:border-jacarta-600 sm:w-32"
+              >
+                <div class="mb-1 text-base font-bold text-jacarta-700 dark:text-white">@Model.NFTs.Count()</div>
+                <div class="text-2xs font-medium tracking-tight dark:text-jacarta-400">Items</div>
+              </a>
+            </div>
+
+            <p class="mb-6 mx-auto max-w-xl text-lg dark:text-jacarta-300">
+              @Model.Description
+            </p>
+                        @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.Creator.NFTUser.UserName)
+                {
+            <a
+                asp-action="Edit" asp-route-id="@Model.Id" asp-controller="Collection"
+                  class=" px-6 rounded-full bg-white py-3 text-center font-semibold text-accent shadow-white-volume transition-all hover:bg-accent-dark hover:text-white hover:shadow-accent-volume"
+                >
+                  Edit
+                </a>
+                }
+          </div>
+        </div>
+      </section>
+      <!-- end profile -->
+
+      <!-- Collection -->
+      <section class="relative py-24">
+        <picture class="pointer-events-none absolute inset-0 -z-10 dark:hidden">
+          <img src="~/assets/img/gradient_light.jpg" alt="gradient" class="h-full w-full" />
+        </picture>
+        <div class="container">
+          <!-- Tabs Nav -->
+          <ul
+            class="nav nav-tabs mb-12 flex items-center justify-center border-b border-jacarta-100 dark:border-jacarta-600"
+            role="tablist"
+          >
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active relative flex items-center whitespace-nowrap py-3 px-6 text-jacarta-400 hover:text-jacarta-700 dark:hover:text-white"
+                id="items-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#items"
+                type="button"
+                role="tab"
+                aria-controls="items"
+                aria-selected="true"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  class="mr-1 h-5 w-5 fill-current"
+                >
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path
+                    d="M13 21V11h8v10h-8zM3 13V3h8v10H3zm6-2V5H5v6h4zM3 21v-6h8v6H3zm2-2h4v-2H5v2zm10 0h4v-6h-4v6zM13 3h8v6h-8V3zm2 2v2h4V5h-4z"
+                  />
+                </svg>
+                <span class="font-display text-base font-medium">Items</span>
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <!-- Items Tab -->
+            <div class="tab-pane fade show active" id="items" role="tabpanel" aria-labelledby="items-tab">
+              <!-- Grid -->
+              <div class="grid grid-cols-1 gap-[1.875rem] md:grid-cols-2 lg:grid-cols-4">
+
+                <partial name="_OnSalePartial" model="Model.NFTs"></partial>
+                    </div>
+              <!-- end grid -->
+            </div>
+            <!-- end items tab -->
+          </div>
+        </div>
+      </section>
+      <!-- end collection -->
+    </main>

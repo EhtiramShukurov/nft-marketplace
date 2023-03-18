@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model IEnumerable<Category>
+<div class="col-12 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Categories</h4>
+            <div class="single-table">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered progress-table text-center">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            @*<th>Action</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.Id</td>                       
+                            <td>@item.Name</td>                       
+@*                          <td>
+                                    <ul class="d-flex justify-content-center">
+                                        <li class="mr-3"><a asp-action="Update" asp-controller="Category" asp-route-id="@item.Id" class="text-secondary"><i class="fa fa-edit"></i></a></li>
+                                        <li><a asp-action="Delete" asp-route-id="@item.Id" asp-controller="Category" class="text-danger"><i class="ti-trash"></i></a></li>
+                                    </ul>
+                                </td>*@
+                        </tr>
+                        }
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

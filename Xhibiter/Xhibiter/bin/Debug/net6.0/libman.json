@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "@microsoft/signalr@latest",
+      "destination": "wwwroot/js/signalr/",
+      "files": [
+        "dist/browser/signalr.js",
+        "dist/browser/signalr.min.js"
+      ]
+    },
+    {
+      "library": "countdown-updated@2.7.0",
+      "destination": "wwwroot/countdown-updated/",
+      "files": [
+        "countdown.js"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery@3.6.3",
+      "destination": "wwwroot/assets/js/",
+      "files": [
+        "jquery.min.js"
+      ]
+    }
+  ]
+}

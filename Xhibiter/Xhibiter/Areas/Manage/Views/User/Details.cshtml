@@ -1,0 +1,210 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+}
+
+@model UserDetailVM
+<div class="col-lg-7 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <div class="media mb-5">
+                <img class="mr-4" style="object-fit: cover;width:100px;height:100px;" src="~/assets/images/users/@Model.User.NFTUser.UserName/profile/@Model.User.ProfileImageUrl" alt="image">
+                <div class="media-body">
+                    <h4 class="mb-3">@Model.User.NFTUser.UserName</h4> 
+                </div>
+            </div>
+                <div class="col-md-8 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Details</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">Username:@Model.User.NFTUser.UserName</li>
+                    <li class="list-group-item">Bio:@Model.User.Bio</li>
+                    <li class="list-group-item">Email:@Model.User.NFTUser.Email</li>
+                    <li class="list-group-item">Wallet Address:@Model.User.NFTUser.WalletAddress</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+<!-- Bordered Table start -->
+<div class="col-lg-6 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Sales</h4>
+            <div class="single-table">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped text-center">
+                        <thead class="text-uppercase">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">NFT</th>
+                                <th scope="col">Collection</th>
+                                <th scope="col">To</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Date</th>
+                                @*<th scope="col">Action</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Sales)
+                                    {
+                                        
+                            <tr>
+                                <th scope="row">@item.Id</th>
+                                <td>@item.NFT.Name</td>
+                                <td>@item.Collection.Name</td>
+                                <td>@item.To.UserName</td>
+                                <td>@item.SalePrice</td>
+                                <td>@item.Date</td>
+                                @*<td><a ><i class="ti-trash"></i></a> </td>*@
+                            </tr>
+                                    }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bordered Table end -->
+<!-- Hoverable Rows Table start -->
+<div class="col-lg-6 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Purchases</h4>
+            <div class="single-table">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead class="text-uppercase">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">NFT</th>
+                                <th scope="col">Collection</th>
+                                <th scope="col">From</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Date</th>
+                                @*<th scope="col">Action</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Purchases)
+                                    {
+                                        
+                            <tr>
+                                <th scope="row">@item.Id</th>
+                                <td>@item.NFT.Name</td>
+                                <td>@item.Collection.Name</td>
+                                <td>@item.From.UserName</td>
+                                <td>@item.SalePrice</td>
+                                <td>@item.Date</td>
+                                @*<td><a ><i class="ti-trash"></i></a> </td>*@
+                            </tr>
+                                    }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hoverable Rows Table end -->
+<!-- Progress Table start -->
+<div class="col-12 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">NFTs</h4>
+            <div class="single-table">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered progress-table text-center">
+                        <thead class="text-uppercase">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Owner</th>
+                                <th scope="col">Creator</th>
+                                <th scope="col">CreationDate</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.NFTs)
+                                    {
+                            <tr>
+                                <th scope="row">@item.Id</th>
+                                <td><img style="object-fit: cover;width:50px;height:50px;" src="~/assets/media/nft/@item.Metadata.MediaUrl" /></td>
+                                <td>@item.Name</td>
+                                <td>@item.Owner.UserName</td>
+                                <td>@item.Metadata.Creator.UserName</td>
+                                <td>@item.Metadata.CreatedDate</td>
+                                <td>
+                                                @if (item.IsSale)
+                                                {
+                                                <span class="status-p bg-primary">On Sale</span>
+                                                    
+                                                }
+                                                @if(item.IsAuctioned)
+                                                {
+                                                <span class="status-p bg-success">On Auction</span>
+                                                }
+                                                @if(!item.IsAuctioned && !item.IsSale)
+                                                {
+                                                <span class="status-p bg-info">Hidden</span>
+                                                }</td>
+                                <td>
+                                    <ul class="d-flex justify-content-center">
+                                        <li class="mr-3"><a asp-action="Details" asp-controller="NFT" asp-area="Manage" asp-route-id="@item.Id" class="text-secondary"><i class="fa fa-edit"></i></a></li>
+                                        @*<li><a href="#" class="text-danger"><i class="ti-trash"></i></a></li>*@
+                                    </ul>
+                                </td>
+                            </tr>
+                                        
+                                    }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Collections</h4>
+            <div class="single-table">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered progress-table text-center">
+                        <thead class="text-uppercase">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Collections)
+                                    {
+                            <tr>
+                                <th scope="row">@item.Id</th>
+                                <td><img  style="object-fit: cover;width:80px;height:50px;" src="~/assets/images/users/@Model.User.NFTUser.UserName/collections/@item.Name/@item.MainImgUrl" /></td>
+                                <td>@item.Name</td>
+                                <td>
+                                    <ul class="d-flex justify-content-center">
+                                        <li class="mr-3"><a asp-action="Details" asp-controller="Collection" asp-area="Manage" asp-route-id="@item.Id"  class="text-secondary"><i class="fa fa-edit"></i></a></li>
+                                        @*<li><a href="#" class="text-danger"><i class="ti-trash"></i></a></li>*@
+                                    </ul>
+                                </td>
+                            </tr>
+                                    }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

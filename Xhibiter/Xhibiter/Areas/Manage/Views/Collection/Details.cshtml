@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+}
+@model IEnumerable<NFT>
+<div class="col-12 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">NFTs</h4>
+            <div class="single-table">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered progress-table text-center">
+                        <thead class="text-uppercase">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Owner</th>
+                                <th scope="col">Creator</th>
+                                <th scope="col">CreationDate</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                                    {
+                            <tr>
+                                <th scope="row">@item.Id</th>
+                                <td><img style="object-fit: cover;width:50px;height:50px;" src="~/assets/media/nft/@item.Metadata.MediaUrl" /></td>
+                                <td>@item.Name</td>
+                                <td>@item.Owner.UserName</td>
+                                <td>@item.Metadata.Creator.UserName</td>
+                                <td>@item.Metadata.CreatedDate</td>
+                                <td>
+                                                @if (item.IsSale)
+                                                {
+                                                <span class="status-p bg-primary">On Sale</span>
+                                                    
+                                                }
+                                                else if(item.IsAuctioned)
+                                                {
+                                                <span class="status-p bg-success">On Auction</span>
+                                                }
+                                                else if (!item.IsSale && !item.IsAuctioned)
+                                                {
+                                                <span class="status-p bg-info">Hidden</span>
+                                                }
+                                                </td>
+                                <td>
+                                    <ul class="d-flex justify-content-center">
+                                        <li class="mr-3"><a asp-action="Details" asp-controller="NFT" asp-route-id="@item.Id" asp-area="Manage" class="text-secondary"><i class="fa fa-edit"></i></a></li>
+                                        @*<li><a asp-action="Delete" asp-controller="NFT" asp-route-id="@item.Id" asp-area="Manage"><i class="ti-trash"></i></a></li>*@
+                                    </ul>
+                                </td>
+                            </tr>
+                                        
+                                    }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

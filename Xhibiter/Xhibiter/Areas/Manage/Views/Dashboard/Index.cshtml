@@ -1,0 +1,155 @@
+﻿
+@{
+ViewData["Title"] = "Index";
+}
+@model DashboardVM
+        <!-- seo fact area start -->
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-md-6 mt-5 mb-3">
+                    <div class="card">
+                        <div class="seo-fact sbg1">
+                            <div class="p-4 d-flex justify-content-between align-items-center">
+                                <div class="seofct-icon"><i class="ti-thumb-up"></i> Minted NFTs</div>
+                                <h2>@Model.NFTNumber</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-md-5 mb-3">
+                    <div class="card">
+                        <div class="seo-fact sbg2">
+                            <div class="p-4 d-flex justify-content-between align-items-center">
+                                <div class="seofct-icon"><i class="ti-share"></i> Overall Sales</div>
+                                <h2>@Model.SaleNumber</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-5 mb-3">
+                    <div class="card">
+                        <div class="seo-fact sbg3">
+                            <div class="p-4 d-flex justify-content-between align-items-center">
+                                <div class="seofct-icon"><i class="ti-thumb-up"></i> Created Collections</div>
+                                <h2>@Model.CollectionNumber</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-md-5 mb-3">
+                    <div class="card">
+                        <div class="seo-fact sbg4">
+                            <div class="p-4 d-flex justify-content-between align-items-center">
+                                <div class="seofct-icon"><i class="ti-share"></i> User Number</div>
+                                <h2>@Model.UserNumber</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- seo fact area end -->
+        <!-- sales area start -->
+        <div class="col-xl-12 col-ml-8 col-lg-8 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Recent Sales</h4>
+            <div class="single-table">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead class="text-uppercase">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">NFT</th>
+                                <th scope="col">Collection</th>
+                                <th scope="col">From</th>
+                                <th scope="col">To</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Sales)
+                            {
+                            <tr>
+                                <th scope="row">@item.Id</th>
+                                <td>@item.NFT.Name</td>
+                                <td>@item.Collection.Name</td>
+                                <td>@item.From.UserName</td>
+                                <td>@item.To.UserName</td>
+                                <td>@item.SalePrice ETH</td>
+                                <td>@item.Date</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- sales area end -->
+@*        <!-- timeline area start -->
+        <div class="col-xl-3 col-ml-4 col-lg-4 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">Timeline</h4>
+                    <div class="timeline-area">
+                        <div class="timeline-task">
+                            <div class="icon bg1">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <div class="tm-title">
+                                <h4>Rashed sent you an email</h4>
+                                <span class="time"><i class="ti-time"></i>09:35</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                            </p>
+                        </div>
+                        <div class="timeline-task">
+                            <div class="icon bg2">
+                                <i class="fa fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="tm-title">
+                                <h4>Rashed sent you an email</h4>
+                                <span class="time"><i class="ti-time"></i>09:35</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                            </p>
+                        </div>
+                        <div class="timeline-task">
+                            <div class="icon bg2">
+                                <i class="fa fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="tm-title">
+                                <h4>Rashed sent you an email</h4>
+                                <span class="time"><i class="ti-time"></i>09:35</span>
+                            </div>
+                        </div>
+                        <div class="timeline-task">
+                            <div class="icon bg3">
+                                <i class="fa fa-bomb"></i>
+                            </div>
+                            <div class="tm-title">
+                                <h4>Rashed sent you an email</h4>
+                                <span class="time"><i class="ti-time"></i>09:35</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                            </p>
+                        </div>
+                        <div class="timeline-task">
+                            <div class="icon bg3">
+                                <i class="ti-signal"></i>
+                            </div>
+                            <div class="tm-title">
+                                <h4>Rashed sent you an email</h4>
+                                <span class="time"><i class="ti-time"></i>09:35</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- timeline area end -->*@

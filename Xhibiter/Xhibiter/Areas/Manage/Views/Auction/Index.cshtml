@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model PaginateVM<Auction>
+<div class="col-12 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Auctions</h4>
+            <div class="single-table">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered progress-table text-center">
+                        <thead class="text-uppercase">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">NFT</th>
+                                <th scope="col">Start time</th>
+                                <th scope="col">End time</th>
+                                <th scope="col">Starting price</th>
+                                <th scope="col">Latest price</th>
+                                <th scope="col">Highest Bidder</th>
+                                <th scope="col">Status</th>
+                                @*<th scope="col">Action</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                                    {
+                            <tr>
+                                <th scope="row">@item.Id</th>
+                                <td>@item.NFT.Name</td>
+                                <td>@item.StartTime</td>
+                                <td>@item.EndTime</td>
+                                <td>@item.StartingPrice</td>
+                                <td>@item.CurrentPrice</td>
+                                <td>@item.Winner.NFTUser.UserName</td>
+                                <td>
+                                    @if (item.IsCompleted)
+                                    {
+                                    <span class="status-p bg-success">Completed</span>
+                                                    
+                                    }
+                                    else
+                                    {
+                                    <span class="status-p bg-primary">On Going</span>
+                                    }</td>
+@*                                <td>
+                                    <ul class="d-flex justify-content-center">
+                                        <li class="mr-3"><a asp-action="Details" asp-controller="Auction" asp-route-id="@item.Id" asp-area="Manage" class="text-secondary"><i class="fa fa-edit"></i></a></li>
+                                        <li><a asp-action="Delete" asp-controller="Auction" asp-area="Manage" asp-route-id="@item.Id" class="text-danger"><i class="ti-trash"></i></a></li>
+                                    </ul>
+                                </td>*@
+                            </tr>
+                                        
+                                    }
+                        </tbody>
+                    </table>
+                    <nav class="mt-5" aria-label="...">
+		  <ul class="pagination pagination-sm">
+			  @if (Model.CurrentPage >1)
+					{
+			<li class="page-item p-lg-1" aria-current="page">
+				<a asp-action="Index" asp-route-page="@Model.CurrentPage-1" class="page-link">Previous</a>
+			</li>
+					}
+			  @for (int i = 1; i <= Model.MaxPageCount; i++)
+					{
+			<li class="page-item p-lg-1 @(Model.CurrentPage == i ? "disabled" :"")" aria-current="page">
+				<a asp-action="Index" asp-route-page="@i" class="page-link">@i</a>
+			</li>
+					}
+			  @if (Model.CurrentPage <Model.MaxPageCount)
+					{
+			<li class="page-item p-lg-1" aria-current="page">
+				<a asp-action="Index" asp-route-page="@(Model.CurrentPage+1)" class="page-link">Next</a>
+			</li>
+					}
+		  </ul>
+		</nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

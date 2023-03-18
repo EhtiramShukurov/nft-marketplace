@@ -1,0 +1,266 @@
+﻿
+@{
+    ViewData["Title"] = "FAQ";
+}
+    <main class="pt-[5.5rem] lg:pt-24">
+      <!-- Page Title -->
+      <section
+        class="relative bg-cover bg-center bg-no-repeat py-20 after:absolute after:inset-0 after:bg-jacarta-900/60"
+        style="background-image: url('/assets/img/page-title/knowledge_base_banner.jpg')"
+      >
+        <div class="container relative z-10">
+          <h1 class="mb-4 text-center font-display text-4xl font-medium text-white">How can I help you?</h1>
+@*          <form action="search" class="relative mx-auto block max-w-md">
+            <input
+              type="search"
+              class="w-full rounded-2xl border border-jacarta-100 py-[0.6875rem] px-4 pl-10 text-jacarta-700 placeholder-jacarta-500 focus:ring-accent"
+              placeholder="Search"
+            />
+            <span class="absolute left-0 top-0 flex h-full w-12 items-center justify-center rounded-2xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                class="h-4 w-4 fill-jacarta-500"
+              >
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path
+                  d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"
+                ></path>
+              </svg>
+            </span>
+          </form>*@
+        </div>
+      </section>
+
+      <!-- Help Center -->
+      <section class="relative py-24">
+        <picture class="pointer-events-none absolute inset-0 -z-10 dark:hidden">
+          <img src="~/assets/img/gradient_light.jpg" alt="gradient" class="h-full w-full" />
+        </picture>
+        <div class="container">
+          <h2 class="mb-10 text-center font-display text-xl font-medium text-jacarta-700 dark:text-white">
+            Frequently asked questions
+          </h2>
+          <p class="mx-auto mb-10 max-w-md text-center text-lg text-jacarta-300">
+            Join our community now to get free updates and also alot of freebies are waiting for you or
+            <a asp-action="ContactUs" asp-controller="Pages" class="text-accent">Contact Support</a>
+          </p>
+
+          <div class="accordion mx-auto max-w-[35rem]" id="accordionFAQ">
+            <div
+              class="accordion-item mb-5 overflow-hidden rounded-lg border border-jacarta-100 dark:border-jacarta-600"
+            >
+              <h2 class="accordion-header" id="faq-heading-1">
+                <button
+                  class="accordion-button collapsed relative flex w-full items-center justify-between bg-white px-4 py-3 text-left font-display text-jacarta-700 dark:bg-jacarta-700 dark:text-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq-1"
+                  aria-expanded="false"
+                  aria-controls="faq-1"
+                >
+                  <span>What is an NFT?</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    class="accordion-arrow h-4 w-4 shrink-0 fill-jacarta-700 transition-transform dark:fill-white"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="faq-1"
+                class="accordion-collapse collapse"
+                aria-labelledby="faq-heading-1"
+                data-bs-parent="#accordionFAQ"
+              >
+                <div
+                  class="accordion-body border-t border-jacarta-100 bg-white p-4 dark:border-jacarta-600 dark:bg-jacarta-700"
+                >
+                  <p class="dark:text-jacarta-200">
+                    NFT stands for Non-Fungible Token. 
+                    It is a unique digital asset that represents ownership of a specific piece of digital content, such as an artwork, music, or video.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="accordion-item mb-5 overflow-hidden rounded-lg border border-jacarta-100 dark:border-jacarta-600"
+            >
+              <h2 class="accordion-header" id="faq-heading-2">
+                <button
+                  class="accordion-button collapsed relative flex w-full items-center justify-between bg-white px-4 py-3 text-left font-display text-jacarta-700 dark:bg-jacarta-700 dark:text-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq-2"
+                  aria-expanded="false"
+                  aria-controls="faq-2"
+                >
+                  <span>How do I buy NFTs?</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    class="accordion-arrow h-4 w-4 shrink-0 fill-jacarta-700 transition-transform dark:fill-white"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="faq-2"
+                class="accordion-collapse collapse"
+                aria-labelledby="faq-heading-2"
+                data-bs-parent="#accordionFAQ"
+              >
+                <div
+                  class="accordion-body border-t border-jacarta-100 bg-white p-4 dark:border-jacarta-600 dark:bg-jacarta-700"
+                >
+                  <p class="dark:text-jacarta-200">
+                    To buy NFTs, you need to have a cryptocurrency wallet that supports the blockchain network where the NFT is created. You can usually purchase NFTs using cryptocurrencies like Ethereum. 
+                    Once you have the necessary cryptocurrency, 
+                    you can visit an NFT marketplace, like Xhibiter, and browse the available NFTs for sale.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="accordion-item mb-5 overflow-hidden rounded-lg border border-jacarta-100 dark:border-jacarta-600"
+            >
+              <h2 class="accordion-header" id="faq-heading-3">
+                <button
+                  class="accordion-button collapsed relative flex w-full items-center justify-between bg-white px-4 py-3 text-left font-display text-jacarta-700 dark:bg-jacarta-700 dark:text-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq-3"
+                  aria-expanded="false"
+                  aria-controls="faq-3"
+                >
+                  <span>How do I create an NFT?</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    class="accordion-arrow h-4 w-4 shrink-0 fill-jacarta-700 transition-transform dark:fill-white"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="faq-3"
+                class="accordion-collapse collapse"
+                aria-labelledby="faq-heading-3"
+                data-bs-parent="#accordionFAQ"
+              >
+                <div
+                  class="accordion-body border-t border-jacarta-100 bg-white p-4 dark:border-jacarta-600 dark:bg-jacarta-700"
+                >
+                  <p class="dark:text-jacarta-200">
+                    To create an NFT, you need to have a digital asset that you want to turn into an NFT. You can use a specialized NFT creation platform or a blockchain network that supports NFT creation, 
+                    like Ethereum. Once you have your digital asset, you can create an NFT by minting it on the blockchain network.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="accordion-item mb-5 overflow-hidden rounded-lg border border-jacarta-100 dark:border-jacarta-600"
+            >
+              <h2 class="accordion-header" id="faq-heading-4">
+                <button
+                  class="accordion-button collapsed relative flex w-full items-center justify-between bg-white px-4 py-3 text-left font-display text-jacarta-700 dark:bg-jacarta-700 dark:text-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq-4"
+                  aria-expanded="false"
+                  aria-controls="faq-4"
+                >
+                  <span>How do I sell an NFT ?</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    class="accordion-arrow h-4 w-4 shrink-0 fill-jacarta-700 transition-transform dark:fill-white"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="faq-4"
+                class="accordion-collapse collapse"
+                aria-labelledby="faq-heading-4"
+                data-bs-parent="#accordionFAQ"
+              >
+                <div
+                  class="accordion-body border-t border-jacarta-100 bg-white p-4 dark:border-jacarta-600 dark:bg-jacarta-700"
+                >
+                  <p class="dark:text-jacarta-200">
+                    To sell your NFTs, you need to list them on an NFT marketplace, like Xhibiter. You will need to provide a description of your NFT, 
+                    set a price, and upload the NFT file to the marketplace. Once your NFT is listed, buyers can browse and purchase it using cryptocurrency.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="accordion-item mb-5 overflow-hidden rounded-lg border border-jacarta-100 dark:border-jacarta-600"
+            >
+              <h2 class="accordion-header" id="faq-heading-5">
+                <button
+                  class="accordion-button collapsed relative flex w-full items-center justify-between bg-white px-4 py-3 text-left font-display text-jacarta-700 dark:bg-jacarta-700 dark:text-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq-5"
+                  aria-expanded="false"
+                  aria-controls="faq-5"
+                >
+                  <span>How do I ensure the authenticity of an NFT?</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    class="accordion-arrow h-4 w-4 shrink-0 fill-jacarta-700 transition-transform dark:fill-white"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="faq-5"
+                class="accordion-collapse collapse"
+                aria-labelledby="faq-heading-5"
+                data-bs-parent="#accordionFAQ"
+              >
+                <div
+                  class="accordion-body border-t border-jacarta-100 bg-white p-4 dark:border-jacarta-600 dark:bg-jacarta-700"
+                >
+                  <p class="dark:text-jacarta-200">
+                    NFTs are created and tracked on the blockchain, which provides a permanent and transparent record of ownership and transaction history. 
+                    You can verify the authenticity of an NFT by checking its blockchain record and confirming that it was created by a reputable artist or platform.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- end help center -->
+    </main>

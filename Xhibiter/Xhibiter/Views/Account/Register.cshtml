@@ -1,0 +1,123 @@
+﻿
+@{
+    Layout = null;
+}
+@model UserRegisterVM
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>Xhibiter | NFT Marketplace HTML Template</title>
+
+    <meta charset="utf-8" />
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+
+    <!-- Css -->
+    <link rel="stylesheet" href="~/assets/css/style.css" />
+
+    <!-- Dark Mode JS -->
+    <script src="~/assets/js/darkMode.bundle.js"></script>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="~/assets/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="~/assets/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="~/assets/img/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="~/assets/img/apple-touch-icon-114x114.png" />
+  </head>
+
+  <body
+    class="overflow-x-hidden font-body text-jacarta-500 dark:bg-jacarta-900"
+    itemscope
+    itemtype="http://schema.org/WebPage"
+  >
+    <main>
+      <!-- Login -->
+      <section class="relative h-screen">
+        <div class="lg:flex lg:h-full">
+          <!-- Left -->
+          <div class="relative text-center lg:w-1/2">
+            <img src="~/assets/img/login.jpg" alt="login" class="absolute h-full w-full object-cover" />
+            <h1 class="relative   py-40 mb-24 font-display text-3xl text-jacarta-700 dark:text-white">
+              Register
+            </h1>
+            <a asp-action="Login" asp-controller="Account" class="py-10 font-display text-3xl text-jacarta-700 dark:text-white relative">
+              Already have an account? Login
+            </a>
+
+          </div>
+
+          <!-- Right -->
+          <div class="relative flex items-center justify-center p-[10%] lg:w-1/2">
+            <picture class="pointer-events-none absolute inset-0 -z-10 dark:hidden">
+              <img src="~/assets/img/gradient_light.jpg" alt="gradient" class="h-full w-full" />
+            </picture>
+
+            <div class="w-full max-w-[25.625rem] ">
+              <div class="container">
+          <div class="mx-auto max-w-[48.125rem] md:flex">
+            <!-- Form -->
+            <form method="post" class="mb-12 w-full md:pr-8">
+              <div class="form-group mb-6">
+                <label asp-for="Username"  class="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
+                  ></label>
+                <input
+                    asp-for="Username"
+                  class="w-full rounded-lg border-jacarta-100 py-3 hover:ring-2 hover:ring-accent/10 focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-white dark:placeholder:text-jacarta-300"
+                  placeholder="Enter username"/>
+                  <span asp-validation-for="Username" class="text-red"></span>
+              </div>
+              <div class="form-group mb-6">
+                <label asp-for="Email"  class="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
+                  ></label>
+                <input
+                    asp-for="Email"
+                  class="w-full rounded-lg border-jacarta-100 py-3 hover:ring-2 hover:ring-accent/10 focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-white dark:placeholder:text-jacarta-300"
+                  placeholder="Enter Email"/>
+                  <span asp-validation-for="Email" class="text-red"></span>
+              </div>
+              <div class="form-group mb-6">
+                <label asp-for="WalletPassword"  class="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
+                  >Wallet Password</label>
+                <input
+                    asp-for="WalletPassword"
+                  class="w-full rounded-lg border-jacarta-100 py-3 hover:ring-2 hover:ring-accent/10 focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-white dark:placeholder:text-jacarta-300"
+                  placeholder="Enter Wallet Password"/>
+                  <span asp-validation-for="WalletPassword" class="text-red"></span>
+              </div>
+              <div class="form-group mb-6">
+                <label asp-for="Password"  class="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
+                  ></label>
+                <input
+                    asp-for="Password"
+                  class="w-full rounded-lg border-jacarta-100 py-3 hover:ring-2 hover:ring-accent/10 focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-white dark:placeholder:text-jacarta-300"
+                  placeholder="Enter Password"/>
+                  <span asp-validation-for="Password" class="text-red"></span>
+              </div>
+              <div class="form-group mb-6">
+                <label asp-for="ConfirmPassword"  class="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
+                  >Confirm Password</label>
+                <input
+                    asp-for="ConfirmPassword"
+                  class="w-full rounded-lg border-jacarta-100 py-3 hover:ring-2 hover:ring-accent/10 focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-white dark:placeholder:text-jacarta-300"
+                  placeholder="Enter username"/>
+                  <span asp-validation-for="ConfirmPassword" class="text-red"></span>
+              </div>
+              <button
+                class="rounded-full bg-accent py-3 px-8 text-center font-semibold text-white shadow-accent-volume transition-all hover:bg-accent-dark"
+              >
+                Sign Up
+              </button>
+            </form>
+          </div>
+        </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- end login -->
+    </main>
+    <!-- JS Scripts -->
+    <script src="~/assets/js/app.bundle.js"></script>
+  </body>
+</html>

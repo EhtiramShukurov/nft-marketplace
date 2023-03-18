@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model PaginateVM<NFT>
+<div class="col-12 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">NFTs</h4>
+            <div class="single-table">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered progress-table text-center">
+                        <thead class="text-uppercase">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Owner</th>
+                                <th scope="col">Creator</th>
+                                <th scope="col">CreationDate</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                                    {
+                            <tr>
+                                <th scope="row">@item.Id</th>
+                                <td><img style="object-fit: cover;width:50px;height:50px;" src="~/assets/media/nft/@item.Metadata.MediaUrl" /></td>
+                                <td>@item.Name</td>
+                                <td>@item.Owner.UserName</td>
+                                <td>@item.Metadata.Creator.UserName</td>
+                                <td>@item.Metadata.CreatedDate</td>
+                                <td>
+                                                @if (item.IsSale)
+                                                {
+                                                <span class="status-p bg-primary">On Sale</span>
+                                                    
+                                                }
+                                                else if(item.IsAuctioned)
+                                                {
+                                                <span class="status-p bg-success">On Auction</span>
+                                                }
+                                                else if (!item.IsSale && !item.IsAuctioned)
+                                                {
+                                                <span class="status-p bg-info">Hidden</span>
+                                                }
+                                                </td>
+                                <td>
+                                    <ul class="d-flex justify-content-center">
+                                        <li class="mr-3"><a asp-action="Details" asp-controller="NFT" asp-route-id="@item.Id" asp-area="Manage" class="text-secondary"><i class="fa fa-edit"></i></a></li>
+                                        @*<li><a asp-action="Delete" asp-controller="NFT" asp-route-id="@item.Id" asp-area="Manage"><i class="ti-trash"></i></a></li>*@
+                                    </ul>
+                                </td>
+                            </tr>
+                                        
+                                    }
+                        </tbody>
+                    </table>
+                    <nav class="mt-5" aria-label="...">
+		  <ul class="pagination pagination-sm">
+			  @if (Model.CurrentPage >1)
+					{
+			<li class="page-item p-lg-1" aria-current="page">
+				<a asp-action="Index" asp-route-page="@Model.CurrentPage-1" class="page-link">Previous</a>
+			</li>
+					}
+			  @for (int i = 1; i <= Model.MaxPageCount; i++)
+					{
+			<li class="page-item p-lg-1 @(Model.CurrentPage == i ? "disabled" :"")" aria-current="page">
+				<a asp-action="Index" asp-route-page="@i" class="page-link">@i</a>
+			</li>
+					}
+			  @if (Model.CurrentPage <Model.MaxPageCount)
+					{
+			<li class="page-item p-lg-1" aria-current="page">
+				<a asp-action="Index" asp-route-page="@(Model.CurrentPage+1)" class="page-link">Next</a>
+			</li>
+					}
+		  </ul>
+		</nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

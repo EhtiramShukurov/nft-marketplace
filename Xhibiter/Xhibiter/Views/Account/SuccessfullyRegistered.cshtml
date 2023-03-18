@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "SuccessfullyRegistered";
+}
+    <main class="pt-[5.5rem] lg:pt-24">
+      <!-- 404 -->
+      <section class="relative py-16 dark:bg-jacarta-800 md:py-24">
+        <picture class="pointer-events-none absolute inset-0 -z-10 dark:hidden">
+          <img src="~/assets/img/gradient_light.jpg" alt="gradient" class="h-full w-full" />
+        </picture>
+        <div class="container">
+          <div class="mx-auto max-w-lg text-center">
+            <h1 class="mb-6 font-display text-4xl text-jacarta-700 dark:text-white md:text-6xl">Succesfully Registered!</h1>
+            <p class="mb-12 text-lg leading-normal dark:text-jacarta-300">
+              You registered succesfully, please check your email and confirm your account.
+            </p>
+            <a
+              asp-action="Index"
+              asp-controller="Home"
+              class="inline-block rounded-full bg-accent py-3 px-8 text-center font-semibold text-white shadow-accent-volume transition-all hover:bg-accent-dark"
+              >Navigate Back Home</a>
+          </div>
+        </div>
+      </section>
+      <!-- end 404 -->
+    </main>
