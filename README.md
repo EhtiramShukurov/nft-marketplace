@@ -40,4 +40,4 @@ Please click [here](https://drive.google.com/file/d/1bGqaWYJy5NHbpsOdZVieNLc9-Oi
 
 ## Thank you!
 
-Thank you for checking out Xhibiter, the NFT marketplace that i built on the Ethereum blockchain! I hope this README file provided you with all the necessary information to get started with my platform. If you have any questions or feedback, please feel free to contact me at shukurovehtiram29@gmail.com. Happy trading!
+Thank you for checking out the NFT marketplace that i built with the usage of Ethereum blockchain! I hope this README file provided you with all the necessary information to get started with my platform. If you have any questions or feedback, please feel free to contact me at shukurovehtiram29@gmail.com. Happy trading!
